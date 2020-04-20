@@ -34,7 +34,8 @@ class Category:
     def categorizedBalance(categories, movements):
         values = {}
         for category in categories:
-            values[category[0]] = 0.0
+            if(category[0] != "Deposit"):
+                values[category[0]] = 0.0
 
         for move in movements:
             category = move[3]

@@ -18,16 +18,16 @@ if __name__ == '__main__':
 
     Movement.expensesOfLastWeeks(7, db)
 
-    Movement.expensesIn("Canteen", db)
-    for movement in movements:
-        if(movement.category[0] == "Others"):
-            print(movement.description + " " +str(movement.date))
+
+    for movement in Movement.movementsOfCategory("Canteen", db):
+        print("Description: " + str(movement[4]) + "-------- Date:" +str(movement[1]))
 
 
 
-    plotExpensesOfYear(connection, "2020",  db)
-    plotGraphs("2020", connection, db)
+    plotYearlyOverview("2020", connection,  db)
+    plotExpensesOfYear("2020", connection, db)
     show()
+
     db.closeConnection()
 
 
