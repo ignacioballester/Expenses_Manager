@@ -5,59 +5,50 @@ import matplotlib
 
 from Movement import *
 
-def plotGraphs(connection, db):
-    movements = Movement.updateDataBase(connection, db)
+
+def plotGraphs(year, connection, db):
+    f1 = plt.figure("Overview (" + str(year) + ")")
+    Movement.updateDataBase(connection, db)
+    movements = Movement.movementsOfYear(year, db)
     categories = db.fetchColumnFromTable("*", "categories")
-    # data to plot
-    labels = []
-    sizes = []
-    total = 0.0
-    for category in categories:
-        if (category[0] != "Deposit"):
-            total += category[1]
 
-    print(total)
+    # Data to plot
+    values = Category.categorizedBalance(categories, movements)
 
-    for category in categories:
-        if (category[0] != "Deposit"):
-            labels.append(category[0])
-            sizes.append((category[1]/total)*100)
 
     # Plot
-    plt.pie(sizes, labels=labels,
+    plt.pie(dict.values(values), labels=dict.keys(values),
             autopct='%1.1f%%', shadow=True, startangle=140)
 
     plt.axis('equal')
-    plt.show()
+
 
 
 def plotExpensesOfYear(connection, year, db):
-    movements = Movement.updateDataBase(connection, db)
+    f2 = plt.figure("Overview of " + str(year))
+    Movement.updateDataBase(connection, db)
     categories = db.fetchColumnFromTable("*", "categories")
+    df = pd.DataFrame()
+    columns = []
+    importantCategory = []
 
-    matplotlib.style.use('ggplot')
+    for i in range(1, len(categories)):
+        columns.append(categories[i][0])
+        df[categories[i][0]] = []
 
-    data = [[2000, 2000, 2000, 2001, 2001, 2001, 2002, 2002, 2002],
-            ['Jann', 'Feb', 'Mar', 'Jan', 'Feb', 'Mar', 'Jan', 'Feb', 'Mar'],
-            [1, 2, 3, 4, 5, 6, 7, 8, 9]]
-
-    rows = zip(data[0], data[1], data[2])
-    headers = ['Year', 'Month', 'Value']
-    df = pd.DataFrame(rows, columns=headers)
+    for i in range (1, 13):
+        movesMonth = Movement.movementsOfLastMonth(i, year, db)
+        values = Category.categorizedBalance(categories, movesMonth)
 
 
 
-    fig, ax = plt.subplots(figsize=(10, 7))
+        df = df.append(values, ignore_index=True)
 
-    months = df['Month'].drop_duplicates()
-    margin_bottom = np.zeros(len(df['Year'].drop_duplicates()))
-    colors = ["#006D2C", "#31A354", "#74C476" , "#74C576" ]
+    df.index = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nob', 'Dec']
+    df.plot(kind='bar', stacked=True)
 
-    for num, month in enumerate(months):
-        values = list(df[df['Month'] == month].loc[:, 'Value'])
 
-        df[df['Month'] == month].plot.bar(x='Year', y='Value', ax=ax, stacked=True,
-                                          bottom=margin_bottom, color=colors[num], label=month)
-        margin_bottom += values
 
+
+def show():
     plt.show()

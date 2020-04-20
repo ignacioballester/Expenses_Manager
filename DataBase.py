@@ -50,31 +50,32 @@ class DataBase:
                              keywords TEXT
                              )""")
 
-    def executeQuerry(self, querry):
 
-        self.c.execute(querry)
+
+    def executeQuery(self, query):
+        self.c.execute(query)
         rows = self.c.fetchall()
         return rows
 
     def insertCateogory(self, name, keywords):
-        querry = """INSERT INTO 'categories'
+        query = """INSERT INTO 'categories'
                                          (id, balance, keywords) 
                                          VALUES (?, ?, ?);"""
 
         param = (name, 0, keywords)
-        self.c.execute(querry, param)
+        self.c.execute(query, param)
 
     def insertMovementDB(self, id, date, amount, category, description):
-        querry = """INSERT INTO 'movements'
+        query = """INSERT INTO 'movements'
                                   (id, date, amount, category, description) 
                                   VALUES (?, ?, ?, ?, ?);"""
 
         param = (id, date, amount, category, description)
-        self.c.execute(querry, param)
+        self.c.execute(query, param)
 
     def fetchColumnFromTable(self, column, table):
-        querry = "SELECT " + column + " from '"+table+"';"
-        self.c.execute(querry)
+        query = "SELECT " + column + " from '"+table+"';"
+        self.c.execute(query)
 
         rows = self.c.fetchall()
         return rows
@@ -89,13 +90,13 @@ class DataBase:
 
 
     def updateRow(self, table, column, value, id):
-        querry = "UPDATE '" + str(table) + "' SET '" + str(column) + "' = '" + str(value) + "' WHERE id = '" + str(
+        query = "UPDATE '" + str(table) + "' SET '" + str(column) + "' = '" + str(value) + "' WHERE id = '" + str(
             id) + "';"
-        self.c.execute(querry)
+        self.c.execute(query)
 
     def resetBalance(self):
-        querry = "UPDATE 'categories' SET 'balance' = 0;"
-        self.c.execute(querry)
+        query = "UPDATE 'categories' SET 'balance' = 0;"
+        self.c.execute(query)
 
     def closeConnection(self):
         self.conn.commit()

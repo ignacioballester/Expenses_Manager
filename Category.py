@@ -30,3 +30,16 @@ class Category:
         db.commit()
         # movement.category.balance = round(movement.category.balance, 2)
 
+    @staticmethod
+    def categorizedBalance(categories, movements):
+        values = {}
+        for category in categories:
+            values[category[0]] = 0.0
+
+        for move in movements:
+            category = move[3]
+            if (category != "Deposit"):
+                amount = move[2]
+                values[category] -= amount
+
+        return values

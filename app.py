@@ -25,7 +25,9 @@ if __name__ == '__main__':
 
 
 
-    #plotExpensesOfYear(connection, "2020",  db)
+    plotExpensesOfYear(connection, "2020",  db)
+    plotGraphs("2020", connection, db)
+    show()
     db.closeConnection()
 
 

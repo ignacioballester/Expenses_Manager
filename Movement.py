@@ -14,7 +14,7 @@ class Movement:
     @staticmethod
     def updateDataBase(connection, db):
         movements = []
-        db.executeQuerry("UPDATE 'categories' SET 'balance' = 0;")
+        db.executeQuery("UPDATE 'categories' SET 'balance' = 0;")
         for i in range(3, connection.sheet.max_row + 1):
             id = connection.sheet.cell(row=i, column=1).value
             date = connection.sheet.cell(row=i, column=2).value
@@ -39,9 +39,15 @@ class Movement:
         return movements
 
     @staticmethod
+    def movementsOfYear(year, db):
+        query = "select * from movements where date BETWEEN '" + str(year) + "-01-1' AND '" + str(year) + "-12-31'"
+        rows = db.executeQuery(query)
+        return rows
+
+    @staticmethod
     def movementsOfCategory(category, db):
-        querry = "select * from movements where category =  '"+str(category)+"'"
-        rows = db.executeQuerry(querry)
+        query = "select * from movements where category =  '"+str(category)+"'"
+        rows = db.executeQuery(query)
         return rows
 
     @staticmethod
@@ -56,9 +62,17 @@ class Movement:
     @staticmethod
     def movementsOfLastMonth(month, year, db):
         lastDay = calendar.monthrange(int(year), int(month))[1]
-        querry = "select * from movements where date BETWEEN '"+year +"-"+ month +"-1' AND '"+ year +"-"+ month +"-"+str(lastDay) +"'"
-        rows = db.executeQuerry(querry)
+        strMonth = ""
+        if(month <= 10):
+            strMonth = "0"+str(month)
+        else:
+            strMonth = str(month)
+        query = "select * from movements where date BETWEEN '"+str(year) +"-"+ strMonth +"-1' AND '"+ str(year) +"-"+ strMonth +"-"+str(lastDay) +"'"
+        rows = db.executeQuery(query)
         return rows
+
+
+
 
     @staticmethod
     def expensesMonth(month, year, db):
@@ -67,19 +81,14 @@ class Movement:
         for row in rows:
             if (row[3] != "Deposit"):
                 total += row[2]
-        return "Monthly Expenses " + month+"/"+ year+": "+str(round(total,2))
+        return "Monthly Expenses " + str(month)+"/"+ str(year)+": "+str(round(total,2))
 
     @staticmethod
     def expensesPerMonth(year, db):
         result = ""
-        for i in range(1,10):
-            month = Movement.expensesMonth("0"+str(i), year, db)
+        for i in range(1,13):
+            month = Movement.expensesMonth(i, year, db)
             if(month.find(str("0.0")) == -1):
-                result += "\n" + month
-
-        for i in range(10,13):
-            month = Movement.expensesMonth(str(i), year, db)
-            if(month.find(str(0.0)) == -1):
                 result += "\n" + month
         print(result)
 
@@ -88,8 +97,8 @@ class Movement:
 
     @staticmethod
     def movementsOfWeek(start, end, db):
-        querry = "select * from movements where date BETWEEN '" + str(start.date()) + "' AND '" + str(end.date()) + "'";
-        rows = db.executeQuerry(querry)
+        query = "select * from movements where date BETWEEN '" + str(start.date()) + "' AND '" + str(end.date()) + "'";
+        rows = db.executeQuery(query)
         return rows
 
     @staticmethod
