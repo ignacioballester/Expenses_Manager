@@ -1,6 +1,6 @@
 # Expenses Manager
 
-##### CLI python program to keep track of expenses
+##### CLI python program to keep track of expenses.
 <p>
 Since TransferWise does not have any features to analyze your expenses, 
 I developed this python project to manage my account expenses. 
