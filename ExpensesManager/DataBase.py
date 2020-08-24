@@ -1,6 +1,5 @@
 import sqlite3
 import datetime
-import re
 class DataBase:
     c = None
 
@@ -17,8 +16,9 @@ class DataBase:
         self.openConnection()
         try:
             self.createMovementTable()
+            print("Movements DB created")
         except:
-            print("Already Created")
+            pass
 
         try:
             self.createCategoriesTable()
@@ -31,8 +31,9 @@ class DataBase:
             self.insertCateogory("Transport", "Vbz, SBB")
             self.insertCateogory("Cash Withdrawal", "Ubs")
             self.insertCateogory("Activities", "Uetliberg, Dolder")
+            print("Basic categories DB created")
         except:
-            print("Already Created")
+            pass
 
     def createMovementTable(self):
         self.c.execute(""" CREATE TABLE movements (

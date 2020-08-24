@@ -1,5 +1,13 @@
-# Expenses_Manager
-<p>Since TransferWise does not have any features to analyze your expenses, I developed this python project to track my account. It uses the exported csv file from TransferWise with all the movements of the account and provides easy to read summaries of information.</p> 
+# Expenses Manager
 
-<p> Features </p>
+##### CLI python program to keep track of expenses
+<p>
+Since TransferWise does not have any features to analyze your expenses, 
+I developed this python project to manage my account expenses. 
+It uses the exported csv file from TransferWise with the account 
+movements to provide summaries and graphs of the information.
+</p> 
+
+#### Features
 <p> Following commands are accepted:  </p>
+

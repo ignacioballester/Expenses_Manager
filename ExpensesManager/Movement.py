@@ -15,7 +15,7 @@ def updateDataBase(db):
     movements = []
     db.executeQuery("UPDATE 'categories' SET 'balance' = 0;")
 
-    df = pd.read_csv("data/movements.csv")
+    df = pd.read_csv("/Users/ignacioballester/Portfolio/Expenses_Manager/data/movements.csv")
     for index, row in df.iterrows():
         id = row['TransferWise ID']
         date = row['Date']
