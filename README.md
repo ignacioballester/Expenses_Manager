@@ -11,9 +11,9 @@ movements to provide summaries and graphs of the information.
 #### Features
 <p> Following commands are accepted:  </p>
 
-* **expyear y** (returns expenses of year y per month)
-* **expmonth m y** (returns expenses of month m and year y)
-* **expweeks l**  (returns expenses of last l weeks)
-* **expcat (optional: category)** (prints expenses by category)
-* **expgraph y** (prints expenses of year y)
-* **catgraph y** (prints expenses of year y by category)
+* _**expyear y**_ (returns expenses of year y per month)
+* _**expmonth m y**_ (returns expenses of month m and year y)
+* _**expweeks l**_  (returns expenses of last l weeks)
+* _**expcat (optional: category)**_ (prints expenses by category)
+* _**expgraph y**_ (prints expenses of year y)
+* _**catgraph y**_ (prints expenses of year y by category)
