@@ -1,7 +1,7 @@
 from ExpensesManager.DataBase import *
 from ExpensesManager.ExpensesGraphView import *
 
-if __name__ == '__main__':
+if __name__ == '__init__':
     db = DataBase("data/movements.db")
     db.initialize()
 
@@ -13,12 +13,6 @@ if __name__ == '__main__':
     #
     # expensesOfLastWeeks(7, db)
     #db.insertKeyword("Canteen", "sdf, s")
-
-    printUncategorizedMoves(db)
-
-
-    plotYearlyOverview("2020",  db)
-    plotExpensesOfYear("2020", db)
     show()
 
     db.closeConnection()

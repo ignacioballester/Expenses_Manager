@@ -1,14 +1,11 @@
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib
 
-from Movement import *
+from ExpensesManager.Movement import *
 
 
-def plotYearlyOverview(year, connection, db):
-    Movement.updateDataBase(connection, db)
-    movements = Movement.movementsOfYear(year, db)
+def plotYearlyOverview(year, db):
+    updateDataBase(db)
+    movements = movementsOfYear(year, db)
     categories = db.fetchColumnFromTable("*", "categories")
 
     # Data to plot
@@ -22,18 +19,16 @@ def plotYearlyOverview(year, connection, db):
 
 
 
-def plotExpensesOfYear(year, connection, db):
-    Movement.updateDataBase(connection, db)
+def plotExpensesOfYear(year, db):
+    updateDataBase(db)
     categories = db.fetchColumnFromTable("*", "categories")
     df = pd.DataFrame()
 
 
 
     for i in range (1, 13):
-        movesMonth = Movement.movementsOfLastMonth(i, year, db)
+        movesMonth = movementsOfMonth(i, year, db)
         values = Category.categorizedBalance(categories, movesMonth)
-
-
 
         df = df.append(values, ignore_index=True)
 
